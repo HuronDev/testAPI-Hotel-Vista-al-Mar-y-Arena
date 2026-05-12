@@ -1,10 +1,7 @@
-import { ReservationStatus } from "../enums/reservation-status.enum";
-
-export interface Reservation {
+export interface Hotel {
   id: number;
-  guestName: string;
-  roomNumber: number;
-  checkIn: string;
-  checkOut: string;
-  status: ReservationStatus;
+  name: string;
+  city: string;
+  rooms: number;
+  pricePerNight: number;
 }

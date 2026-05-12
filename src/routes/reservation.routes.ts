@@ -1,19 +1,10 @@
 import { Router } from "express";
-import { getReservations } from "../controllers/reservation.controller";
+import { HotelController } from "../controllers/reservation.controller";
 
 const router = Router();
+const controller = new HotelController();
 
-/**
- * @swagger
- * /api/reservations:
- *   get:
- *     summary: Get all hotel reservations
- *     tags:
- *       - Reservations
- *     responses:
- *       200:
- *         description: Reservations retrieved successfully
- */
-router.get("/", getReservations);
+router.get("/", controller.getAll.bind(controller));
+router.get("/:id", controller.getById.bind(controller));
 
 export default router;

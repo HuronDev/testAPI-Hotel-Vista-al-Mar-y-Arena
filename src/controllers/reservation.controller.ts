@@ -1,49 +1,22 @@
 import { Request, Response } from "express";
+import { HotelService } from "../service/hotel.service";
 
+const service = new HotelService();
 
-import { ReservationStatus } from "../enums/reservation-status.enum";
-import { reservations } from "../data/eservations";
-
-export const getReservations = (
-  req: Request,
-  res: Response
-): void => {
-  res.status(200).json({
-    message: "Reservations retrieved successfully",
-    total: reservations.length,
-    data: reservations,
-  });
-};
-
-export const createReservation = (
-  req: Request,
-  res: Response
-): void => {
-  const { guestName, roomNumber, checkIn, checkOut } = req.body;
-
-  if (!guestName || !roomNumber || !checkIn || !checkOut) {
-    res.status(400).json({
-      message: "All fields are required",
-    });
-
-    return;
+export class HotelController {
+  getAll(req: Request, res: Response) {
+    const data = service.getAll();
+    res.json(data);
   }
 
-  const newReservation = {
-    id: reservations.length + 1,
-    guestName,
-    roomNumber,
-    checkIn,
-    checkOut,
+  getById(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    const hotel = service.getById(id);
 
-    // enum
-    status: ReservationStatus.PENDING,
-  };
+    if (!hotel) {
+      return res.status(404).json({ message: "Hotel not found" });
+    }
 
-  reservations.push(newReservation);
-
-  res.status(201).json({
-    message: "Reservation created successfully",
-    data: newReservation,
-  });
-};
+    res.json(hotel);
+  }
+}

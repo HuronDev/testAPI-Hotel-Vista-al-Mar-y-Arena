@@ -1,8 +1,5 @@
-export class AppError extends Error {
-  status: number;
-
-  constructor(message: string, status = 500) {
+export class HttpError extends Error {
+  constructor(public status: number, message: string) {
     super(message);
-    this.status = status;
   }
 }

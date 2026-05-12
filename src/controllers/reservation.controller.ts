@@ -1,19 +1,18 @@
 import { Request, Response, NextFunction } from "express";
 import { HotelService } from "../service/hotel.service";
 import { logger } from "../utils/logger";
+import { HttpError } from "../errors/app.error";
 
 export class HotelController {
-  constructor(private service: HotelService = new HotelService()) { }
+  constructor(private service: HotelService = new HotelService()) {}
 
   getAll = (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const data = this.service.getAll();
-      res.json(data);
-    } catch (error) {
-      logger.error(error);
-      next(error);
-    }
-  };
+  try {
+    throw new Error("🔥 Test error desde /hotels");
+  } catch (error) {
+    next(error);
+  }
+};
 
   getById = (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -24,8 +23,7 @@ export class HotelController {
       const hotel = this.service.getById(id);
 
       if (!hotel) {
-        logger.warn({ id }, "Hotel not found");
-        return res.status(404).json({ message: "Hotel not found" });
+        throw new HttpError(404, "Hotel not found");
       }
 
       res.json(hotel);
@@ -33,4 +31,7 @@ export class HotelController {
       next(error);
     }
   };
+
+
+  
 }

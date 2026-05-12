@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from "express";
 import { HotelService } from "../service/hotel.service";
+import { logger } from "../utils/logger";
 
 export class HotelController {
-  constructor(private service: HotelService = new HotelService()) {}
+  constructor(private service: HotelService = new HotelService()) { }
 
   getAll = (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = this.service.getAll();
       res.json(data);
     } catch (error) {
+      logger.error(error);
       next(error);
     }
   };
@@ -16,9 +18,13 @@ export class HotelController {
   getById = (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = Number(req.params.id);
+
+      logger.info({ id }, "Fetching hotel by id");
+
       const hotel = this.service.getById(id);
 
       if (!hotel) {
+        logger.warn({ id }, "Hotel not found");
         return res.status(404).json({ message: "Hotel not found" });
       }
 

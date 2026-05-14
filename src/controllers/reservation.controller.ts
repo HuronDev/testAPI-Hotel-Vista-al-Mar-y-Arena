@@ -4,7 +4,7 @@ import { logger } from "../utils/logger";
 import { HttpError } from "../errors/app.error";
 
 export class HotelController {
-  constructor(private service: HotelService = new HotelService()) { }
+  constructor(private service: HotelService = new HotelService()) {}
 
   getAll = (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -18,7 +18,8 @@ export class HotelController {
 
   getById = (req: Request, res: Response, next: NextFunction) => {
     try {
-      const id: string = 123;
+      const id = Number(req.params.id);
+
       logger.info({ id }, "Fetching hotel by id");
 
       const hotel = this.service.getById(id);
@@ -34,5 +35,5 @@ export class HotelController {
   };
 
 
-
+  
 }

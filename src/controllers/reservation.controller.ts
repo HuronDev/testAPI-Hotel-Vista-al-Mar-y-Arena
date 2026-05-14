@@ -7,12 +7,14 @@ export class HotelController {
   constructor(private service: HotelService = new HotelService()) {}
 
   getAll = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    throw new Error("🔥 Test error desde /hotels");
-  } catch (error) {
-    next(error);
-  }
-};
+    try {
+      const data = this.service.getAll();
+      res.json(data);
+    } catch (error) {
+      logger.error(error);
+      next(error);
+    }
+  };
 
   getById = (req: Request, res: Response, next: NextFunction) => {
     try {

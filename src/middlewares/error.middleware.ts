@@ -13,7 +13,6 @@ export function errorMiddleware(
   const statusCode =
     err instanceof HttpError ? err.status : 500;
 
-  // LOG
   logger.error(
     {
       err,
@@ -23,10 +22,8 @@ export function errorMiddleware(
     "Unhandled error"
   );
 
-  // SENTRY
   Sentry.captureException(err);
 
-  // SLACK SOLO 500+
   if (statusCode >= 500) {
     sendSlackAlert({
       message: err.message,

@@ -3,5 +3,5 @@ services:
     build: .
     container_name: api-hotel-container
     ports:
-      - "3010:3020"
+      - "3010:3000"
     restart: always

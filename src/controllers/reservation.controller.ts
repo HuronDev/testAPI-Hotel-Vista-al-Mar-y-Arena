@@ -4,12 +4,14 @@ import { logger } from "../utils/logger";
 import { HttpError } from "../errors/app.error";
 
 export class HotelController {
-  constructor(private service: HotelService = new HotelService()) {}
+  constructor(private service: HotelService = new HotelService()) { }
 
   getAll = (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = this.service.getAll();
-      res.json(data);
+      res.json({
+        message: "DEPLOY AUTOMATICO FUNCIONANDO"
+      })
     } catch (error) {
       logger.error(error);
       next(error);
@@ -35,5 +37,5 @@ export class HotelController {
   };
 
 
-  
+
 }

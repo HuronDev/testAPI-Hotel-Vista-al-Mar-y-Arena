@@ -32,6 +32,7 @@ export function errorMiddleware(
       statusCode,
     });
   }
+  //correccion de middlewares
 
   return res.status(statusCode).json({
     message: err.message || "Internal server error",
